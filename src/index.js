@@ -74,6 +74,7 @@ res.json({
 });
 
 //6.2 Leer/listar todas las entradas existentes
+
 app.get("/allSongs", async(req, res)=>{
     //select a la DB
     let query = "SELECT * FROM colombianSongs.favoriteSongs";
@@ -94,5 +95,30 @@ app.get("/allSongs", async(req, res)=>{
 
 });
 
-//6.3 Actualizar una entrada existente
+//6.3 Actualizar una entrada existente (POST)
+
+app.post("/addSongs", async(req, res) => {
+
+    const infoSongs = req.body; 
+    const { name,author,year,genre,comments } = infoSongs;
+
+    //consulta
+    let addQuery = "INSERT INTO `favoriteSongs`(`name`,`author`,`year`,`genre`,`comments`) VALUES ('?','?','?','?','?')";
+
+    //hacer conexion DB
+    const conn = await getConnection();
+    //ejecutar consulta
+    const [results] = await conn.query(addQuery, [name,author,year,genre,comments]);
+
+    //enviar una respuesta
+    res.json({
+        success: true,
+        id: results.insertId, //nuevo elemento agregado
+    });
+
+});
+
+
+
+
 //6.4 Eliminar una entrada existente
