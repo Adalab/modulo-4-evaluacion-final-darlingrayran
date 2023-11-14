@@ -35,7 +35,43 @@ app.listen(port, ()=>{
 });
 
 //6. crear endpoints
-//6.1 Insertar una entrada en su entidad principal
+//6.1 Insertar una entrada en su entidad principal - ID
+
+app.get("/allSongs/:id", async(req, res)=> {
+
+//obtener el id: url params
+const idAllSongs = req.params.id;
+
+//validacion
+if(isNaN(parseInt(idAllSongs))){
+    res.json({
+        success: false,
+        error: "Ingresa un numero"
+    });
+    return;
+}
+
+// select a la DB por id
+let query = "SELECT * FROM colombianSongs.favoriteSongs WHERE id = ?";
+
+const conn = await getConnection()
+//ejecutar consulta por id
+const [results] = await conn.query(query, [idAllSongs]);
+const numOfElements = results.length;
+
+//validacion cuando no existe
+if(numOfElements === 0){
+    res.json({
+        success: true,
+        message: "No existe una cancion con ese ID. Ingrese un nuevo numero",
+    });
+    return;
+}
+
+res.json({
+    results: results[0],
+    });
+});
 
 //6.2 Leer/listar todas las entradas existentes
 app.get("/allSongs", async(req, res)=>{
@@ -57,5 +93,6 @@ app.get("/allSongs", async(req, res)=>{
     });
 
 });
+
 //6.3 Actualizar una entrada existente
-//6.4 Eliminar una entrada existente 
+//6.4 Eliminar una entrada existente
