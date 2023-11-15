@@ -25,4 +25,18 @@ CREATE TABLE `colombiansongs`.`favoriteSongs` (
   INSERT INTO `favoriteSongs`(`name`,`author`,`year`,`genre`,`comments`) VALUES ('baracunatana','aterciopelados','1996','rock en español','album: la pipa de la paz');
   INSERT INTO `favoriteSongs`(`name`,`author`,`year`,`genre`,`comments`) VALUES ('salud por el','Paola Jara','2020','ranchera', 'album: prohibido');
 INSERT INTO `favoriteSongs`(`name`,`author`,`year`,`genre`,`comments`) VALUES ('salud por el','Paola Jara','2020','ranchera', 'album: prohibido');
+
+CREATE TABLE `colombiansongs`.`usuarios_db` (
+`id` INT NOT NULL AUTO_INCREMENT,
+`email` VARCHAR(45) NOT NULL,
+`username` VARCHAR(45) NOT NULL,
+`password` VARCHAR(300) NOT NULL,
+PRIMARY KEY (`id`),
+UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE);
+
+  
+
+  
+  
+  
   
