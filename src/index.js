@@ -156,6 +156,21 @@ app.post("/addSongs", async(req, res) => {
 });
 
 
-//6.4 Eliminar una entrada existente
+//6.4 Eliminar una entrada existente (DELETE)
+
+app.delete("/allSongs/:id", async(req, res)=>{
+
+    const idAllSongs = req.params.id;
+
+    let query = "DELETE FROM favoriteSongs WHERE id = ?;";
+
+    const conn = await getConnection();
+    const [results] = await conn.query(query, [idAllSongs,]);
+
+    res.json({
+        success: true,
+        message: "Se ha eliminado el registro correctamente",
+    });
+});
 
 
