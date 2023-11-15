@@ -24,5 +24,5 @@ CREATE TABLE `colombiansongs`.`favoriteSongs` (
   INSERT INTO `favoriteSongs`(`name`,`author`,`year`,`genre`,`comments`) VALUES ('arroyito','Fonseca','2008','pop','album: Gratitud');
   INSERT INTO `favoriteSongs`(`name`,`author`,`year`,`genre`,`comments`) VALUES ('baracunatana','aterciopelados','1996','rock en español','album: la pipa de la paz');
   INSERT INTO `favoriteSongs`(`name`,`author`,`year`,`genre`,`comments`) VALUES ('salud por el','Paola Jara','2020','ranchera', 'album: prohibido');
-  
+INSERT INTO `favoriteSongs`(`name`,`author`,`year`,`genre`,`comments`) VALUES ('salud por el','Paola Jara','2020','ranchera', 'album: prohibido');
   

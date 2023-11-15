@@ -3,6 +3,12 @@
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2/promise");
+//7
+require("dotenv").config();
+
+//7.1. Instalar y configuar EL JWT y bcrypt
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 //2. arrancar el servidor
 
@@ -26,6 +32,11 @@ async function getConnection(){
     connection.connect();
     return connection;
 }
+
+const generateToken = (payload) => {
+    const token = jwt.sign(payload, "secreto", { expiresIn: "12h" });
+    return token;
+  };
 
 //4. escuchar servidor
 
@@ -174,5 +185,30 @@ app.delete("/allSongs/:id", async(req, res)=>{
 });
 
 
+//7.2 Proceso de registro
+//email,usuario, contraseña
+app.post("/register", async (req, res) => {
+    const email = req.body.email;
+    const username = req.body.username;
+    const password = req.body.password;
+    
+    //encriptar la contraseña
+    const passwordHashed = await bcrypt.hash(password, 10); //aumentar la seguridad de contraseña encriptada
+  
+    // prepara la consulta sql
+    const query = "INSERT INTO `usuarios_db`(`email`, `username`, `password`) VALUES (?,?,?)";
+  
+    const conn = await getConnection();
+  
+    const [results] = await conn.query(query, [email,username,passwordHashed]);
+    conn.end();
 
+    res.json({
+      success: true,
+      id: results.insertId,
+    });
+  });
+
+
+  
 
