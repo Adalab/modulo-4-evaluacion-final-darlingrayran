@@ -35,6 +35,7 @@ app.listen(port, ()=>{
 });
 
 //6. crear endpoints
+
 //6.1 Insertar una entrada en su entidad principal - ID
 
 app.get("/allSongs/:id", async(req, res)=> {
@@ -99,17 +100,17 @@ app.get("/allSongs", async(req, res)=>{
 //id: url params
 //info actualizar: body params
 
-app.put("/allSongs/:id", async(req, res) =>{
+app.put("/allSongs/:id", async (req, res) => {
 
     const infoSongs = req.body; 
     const { name,author,year,genre,comments } = infoSongs;
 
     const idAllSongs = req.params.id;
 
-    let query = "UPDATE favoriteSongs SET name=?,author=?,year=?,genre=?,comments=? WHERE id = ?"
+    let query = "UPDATE favoriteSongs SET name=?,author=?,year=?,genre=?,comments=? WHERE id = ?";
 
     const conn = await getConnection();
-    const [results] = await conn.query(query, [name, author, year, genre, comments,]);
+    const [results] = await conn.query(query, [name, author, year, genre, comments, idAllSongs,]);
 
     res.json({
         success: true,
@@ -117,7 +118,7 @@ app.put("/allSongs/:id", async(req, res) =>{
     });
 });
 
-//6.5 insertar una nueva entrada (POST)
+//6.4 insertar una nueva entrada (POST)
 
 app.post("/addSongs", async(req, res) => {
 
@@ -155,8 +156,7 @@ app.post("/addSongs", async(req, res) => {
     }
 });
 
-
-//6.4 Eliminar una entrada existente (DELETE)
+//6.5 Eliminar una entrada existente (DELETE)
 
 app.delete("/allSongs/:id", async(req, res)=>{
 
@@ -172,5 +172,7 @@ app.delete("/allSongs/:id", async(req, res)=>{
         message: "Se ha eliminado el registro correctamente",
     });
 });
+
+
 
 
