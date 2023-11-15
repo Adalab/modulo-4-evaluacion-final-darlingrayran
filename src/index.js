@@ -209,6 +209,46 @@ app.post("/register", async (req, res) => {
     });
   });
 
+  //7.3 Proceso de login
+//usuario y la contraseña
+app.post("/login", async (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+  
+    //Ver si el usuario existe : en bd
+    const query = "SELECT * FROM colombianSongs.usuarios_db WHERE username = ?";
+  
+    const conn = await getConnection();
+  
+    const [usuarios_db] = await conn.query(query, [username]);
+    const user = usuarios_db[0]; // solo me quedo con el primer usuario
+    console.log(user);
+  
+    //Comprobar si el usuario y la contraseña coincide con la que está en BD: bcrypt
+    const wellPass =
+      user === null
+        ? false
+        : await bcrypt.compare(password, user.password);
+  
+    //Si el usuario no existe o la contraseña es incorrecta -> credenciales no válidas
+    if (!(wellPass && user)) {
+      return res.json({ success: false, error: "Credenciales inválidas" });
+    }
+  
+    //si el usuario existe y la contraseña coincide: generar un token
+    const infoToken = {
+      username: user.username,
+      id: user.id,
+    };
+  
+    const token = generateToken(infoToken);
+  
+    res.json({ success: true, token, username: user.username });
+  
+  });
+  
+
+
 
   
 
