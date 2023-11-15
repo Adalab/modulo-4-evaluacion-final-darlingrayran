@@ -244,7 +244,7 @@ app.post("/login", async (req, res) => {
     const token = generateToken(infoToken);
   
     res.json({ success: true, token, username: user.username });
-  
+  //
   });
   
 
